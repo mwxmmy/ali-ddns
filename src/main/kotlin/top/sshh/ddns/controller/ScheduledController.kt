@@ -78,18 +78,22 @@ class ScheduledController {
             if (domain.domainname.isNullOrBlank() || domain.domainrr.isNullOrBlank()) {
                 continue
             }
-            try{
-                updateDomain(domain)
-            }catch (e: ClientException){
-                when (e.errCode) {
-                    "DomainRecordNotBelongToUser" -> {
-                        addDomain(domain)
-                    }
-                    "DomainRecordDuplicate" -> {
-                        domainService.updateById(domain)
-                    }
-                    else -> {
-                        e.printStackTrace()
+            if(domain.recordid.isNullOrBlank()){
+                addDomain(domain)
+            }else{
+                try{
+                    updateDomain(domain)
+                }catch (e: ClientException){
+                    when (e.errCode) {
+                        "DomainRecordNotBelongToUser" -> {
+                            addDomain(domain)
+                        }
+                        "DomainRecordDuplicate" -> {
+                            domainService.updateById(domain)
+                        }
+                        else -> {
+                            e.printStackTrace()
+                        }
                     }
                 }
             }
@@ -107,9 +111,7 @@ class ScheduledController {
             domain.recordid = domainRecords[0].recordId
             domain.domainip = domainRecords[0].value
             return domain
-        } else {
-            return domain
-        }
+        } else return domain
     }
 
     fun addDomain(domain: Domain) {
