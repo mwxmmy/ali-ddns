@@ -77,11 +77,6 @@ class ScheduledController {
             }
             if (domain.domainname.isNullOrBlank() || domain.domainrr.isNullOrBlank()) {
                 continue
-            } else if (domain.recordid.isNullOrBlank()) {
-                domain.recordid = getDomain(domain).recordid
-                if (domain.recordid.isNullOrBlank()) {
-                    addDomain(domain)
-                }
             }
             try{
                 updateDomain(domain)
@@ -91,7 +86,6 @@ class ScheduledController {
                         addDomain(domain)
                     }
                     "DomainRecordDuplicate" -> {
-                        domain.recordid = getDomain(domain).recordid
                         domainService.updateById(domain)
                     }
                     else -> {
