@@ -23,7 +23,10 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-web"){
+        exclude(group = "org.springframework",module = "spring-webmvc")
+        exclude(group = "org.springframework.boot",module = "spring-boot-starter-tomcat")
+    }
     implementation ("com.baomidou:mybatis-plus-boot-starter:3.3.2")
     implementation ("mysql:mysql-connector-java:5.1.49")
     implementation ("com.aliyun:aliyun-java-sdk-core:4.5.7")

@@ -4,5 +4,6 @@ spring:
     url: jdbc:mysql://localhost:3306/ddns?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: root
-
+    hikari:
+      maximum-pool-size: 1
 IPEchoUrl: http://ip.cip.cc
