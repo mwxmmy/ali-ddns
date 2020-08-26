@@ -61,12 +61,14 @@ class ScheduledController {
     }
 
 
-    @Scheduled(cron = "0/5 * * * * *")
+    @Scheduled(cron = "0/10 * * * * *")
     fun checkIp() {
         var ip = getIp()
         if (ip.isBlank()) {
+            println(dateFormat.format(LocalDateTime.now())+"---------定时任务开始执行,当前ip为空:"+ip)
             return
         }
+        println(dateFormat.format(LocalDateTime.now())+"---------定时任务开始执行,当前ip为:"+ip)
         var domainList = domainService.list()
         for (domain in domainList) {
             val domain = getDomain(domain)
